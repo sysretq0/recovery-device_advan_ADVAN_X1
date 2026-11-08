@@ -16,7 +16,6 @@ device-apc-mt6789.ko
 pinctrl-mtk-v2.ko
 pinctrl-mt6789.ko
 pinctrl-mtk-common-v2_debug.ko
-zsmalloc.ko
 zram.ko
 clk-common.ko
 clk-mt6789.ko
@@ -42,7 +41,6 @@ mtk-dvfsrc-regulator.ko
 mtk-emi.ko
 mtk-smi.ko
 mtk-smi-dbg.ko
-arm_dsu_pmu.ko
 mtk-icc-core.ko
 mtk-mmdvfs.ko
 mtk-mmdvfs-debug.ko
@@ -52,7 +50,6 @@ iommu_secure.ko
 iommu_debug.ko
 mtk_iommu.ko
 iommu_test.ko
-mtk_mm_heap.ko
 system_heap.ko
 mtk-cmdq-drv-ext.ko
 cmdq-platform-mt6789.ko
@@ -63,7 +60,6 @@ aee_rs.ko
 mmprofile.ko
 mtk-uart-apdma.ko
 8250_mtk.ko
-phy-generic.ko
 phy-mtk-tphy.ko
 musb_boost.ko
 musb_hdrc.ko
@@ -73,14 +69,10 @@ mt635x-auxadc.ko
 mt6397.ko
 mt63xx-debug.ko
 mtk-spmi-pmic.ko
-spmi-mtk-pmif.ko
 mt6358-regulator.ko
-regmap-spmi.ko
-panel-fhdp-icnl9922-dsi-vdo-boe678-120hz.ko
 cqhci.ko
 mtk_panel_ext.ko
 cw2217_battery.ko
-mtk-mmc-autok.ko
 mtk-mmc-dbg.ko
 mtk-mmc.ko
 phy-mtk-ufs.ko
@@ -106,9 +98,6 @@ extdev_io_class.ko
 rt5133-regulator.ko
 clkbuf.ko
 teeperf.ko
-mcDrvModule.ko
-industrialio-triggered-buffer.ko
-kfifo_buf.ko
 mt6375-adc.ko
 mt6375-auxadc.ko
 adapter_class.ko
@@ -122,7 +111,6 @@ mtk_pd_adapter.ko
 mtk_pd_charging.ko
 mtk_pep50.ko
 mtk_pep20.ko
-sc854x_charger.ko
 mtk_charger_framework.ko
 rt_pd_manager.ko
 rt4831a_drv.ko
@@ -142,16 +130,12 @@ pmic_lvsys_notify.ko
 mtk_dynamic_loading_throttling.ko
 mtk_pbm.ko
 mtk_mdpm.ko
-reboot-mode.ko
-syscon-reboot-mode.ko
 reset-ti-syscon.ko
 meta.ko
 mtk-cqdma.ko
 mtk_sync.ko
 emi.ko
 emi-mpu.ko
-cfg80211.ko
-mac80211.ko
 tinysys-scmi.ko
 mtk-mbox-mailbox.ko
 irq-dbg.ko
@@ -164,5 +148,4 @@ mtk-pm-domain-disable-unused.ko
 sec.ko
 uload_ind.ko
 load_track.ko
-prize_common_node_temp.ko
 chipone-tddi.ko

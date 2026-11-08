@@ -4,11 +4,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Inherit from ADVAN_X1 device
-$(call inherit-product, device/advan/ADVAN_X1/device.mk)
+# Inherit from the A16 mt6789 common
+$(call inherit-product, device/transsion/mt6789-common/common.mk)
 
-# Inherit some common TWRP stuff.
-$(call inherit-product, vendor/twrp/config/common.mk)
+# Inherit from ADVAN X1 device
+$(call inherit-product, device/advan/ADVAN_X1/device.mk)
 
 # Product Specifics
 PRODUCT_NAME := twrp_ADVAN_X1

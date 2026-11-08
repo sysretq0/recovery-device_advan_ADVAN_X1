@@ -148,17 +148,6 @@ alias i2c:rt1715 tcpc_rt1711h
 alias i2c:rt1716 tcpc_rt1711h
 alias of:N*T*Cmediatek,mtk_ctd mtk_chg_type_det
 alias of:N*T*Cmediatek,mtk_ctdC* mtk_chg_type_det
-alias spi:gf_spi gf_tee
-alias of:N*T*Cmediatek,fingerprint gf_tee
-alias of:N*T*Cmediatek,fingerprintC* gf_tee
-alias of:N*T*Cmediatek,goodix-fp gf_tee
-alias of:N*T*Cmediatek,goodix-fpC* gf_tee
-alias of:N*T*Cgoodix,goodix-fp gf_tee
-alias of:N*T*Cgoodix,goodix-fpC* gf_tee
-alias of:N*T*Cmediatek,fingerprint-spi-dev gf_tee
-alias of:N*T*Cmediatek,fingerprint-spi-devC* gf_tee
-alias of:N*T*Cmediatek,simstate prize_sim_state
-alias of:N*T*Cmediatek,simstateC* prize_sim_state
 alias of:N*T*Cmediatek,charger,pe2 mtk_pep20
 alias of:N*T*Cmediatek,charger,pe2C* mtk_pep20
 alias of:N*T*Cmediatek,mt6358-gauge mt6358_battery
@@ -328,8 +317,6 @@ alias of:N*T*Cmediatek,mt6779-uart-dma mtk_uart_apdma
 alias of:N*T*Cmediatek,mt6779-uart-dmaC* mtk_uart_apdma
 alias of:N*T*Cmediatek,mt6765-cqdma mtk_cqdma
 alias of:N*T*Cmediatek,mt6765-cqdmaC* mtk_cqdma
-alias of:N*T*Cmediatek,nfc st21nfc
-alias of:N*T*Cmediatek,nfcC* st21nfc
 alias of:N*T*Cmediatek,mt6375 mt6375
 alias of:N*T*Cmediatek,mt6375C* mt6375
 alias of:N*T*Cmediatek,mt6983-disp-tdshp mediatek_drm
@@ -792,7 +779,6 @@ alias of:N*T*Carm,sec-rng sec_rng
 alias of:N*T*Carm,sec-rngC* sec_rng
 alias of:N*T*Cmediatek,pd_adapter mtk_pd_adapter
 alias of:N*T*Cmediatek,pd_adapterC* mtk_pd_adapter
-alias net-pf-16-proto-16-family-nl80211 cfg80211
 alias platform:musb-hdrc musb_hdrc
 alias of:N*T*Cmediatek,mt6789-usb20 musb_hdrc
 alias of:N*T*Cmediatek,mt6789-usb20C* musb_hdrc
@@ -951,8 +937,6 @@ alias of:N*T*Cmediatek,mt6879-mml_wrot mtk_mml
 alias of:N*T*Cmediatek,mt6879-mml_wrotC* mtk_mml
 alias of:N*T*Cmediatek,mt6895-mml_wrot mtk_mml
 alias of:N*T*Cmediatek,mt6895-mml_wrotC* mtk_mml
-alias of:N*T*Carm,dsu-pmu arm_dsu_pmu
-alias of:N*T*Carm,dsu-pmuC* arm_dsu_pmu
 alias of:N*T*Cmediatek,mt6323 mt6397
 alias of:N*T*Cmediatek,mt6323C* mt6397
 alias of:N*T*Cmediatek,mt6357 mt6397

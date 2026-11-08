@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 #	This file is part of the OrangeFox Recovery Project
 # 	Copyright (C) 2024-2025 The OrangeFox Recovery Project
@@ -18,78 +19,64 @@
 # 	Please maintain this if you use this script or any part of it
 #
 
-#set -o xtrace
-FDEVICE="ADVAN_X1"
+fetch_mt6789_common_repo() {
+	local URL=https://github.com/ramabondanp/twrp-device_transsion_mt6789-common.git
+	local common="$1/device/transsion/mt6789-common"
+	if [ ! -d "$common" ]; then
+		echo "Cloning $URL ... to $common"
+		git clone "$URL" -b twrp-16.0-tos16 "$common" || return 1
+	else
+		echo "Device common repository: \"$common\" found ..."
+	fi
+	if [ ! -e "$common/.git" ]; then
+		echo "ERROR: $common is not a Git checkout." >&2
+		return 1
+	fi
+	local branch
+	branch=$(git -C "$common" branch --show-current) || return 1
+	if [ "$branch" != twrp-16.0-tos16 ]; then
+		echo "ERROR: Common tree must be on twrp-16.0-tos16 (found: ${branch:-detached HEAD})." >&2
+		return 1
+	fi
+}
 
-# Clone to fix build on minimal manifest
-git clone https://android.googlesource.com/platform/external/gflags/ -b android-12.1.0_r4 external/gflags
+apply_ADVAN_X1_patch() {
+	local tree="$1"
+	local patch="$2"
+	if [ ! -f "$patch" ]; then
+		return 0
+	fi
+	if git -C "$tree" apply --reverse --check "$patch" >/dev/null 2>&1; then
+		echo "Already applied: $(basename "$patch")"
+	elif git -C "$tree" apply --check "$patch"; then
+		git -C "$tree" apply "$patch" || return 1
+		echo "Applied: $(basename "$patch")"
+	else
+		echo "ERROR: Cannot apply $patch to $tree; resolve the conflict first." >&2
+		return 1
+	fi
+}
 
-export FOX_USE_SPECIFIC_MAGISK_ZIP=~/Magisk/Magisk-v28.1.zip
-export FOX_VIRTUAL_AB_DEVICE=1
-export FOX_VANILLA_BUILD=1
-export FOX_ENABLE_APP_MANAGER=1
-export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
-export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
-export FOX_USE_BASH_SHELL=1
-export FOX_ASH_IS_BASH=1
-export FOX_USE_TAR_BINARY=1
-export FOX_USE_LZ4_BINARY=1
-export FOX_USE_SED_BINARY=1
-export FOX_USE_XZ_UTILS=1
-export FOX_USE_ZSTD_BINARY=1
-export FOX_USE_NANO_EDITOR=1
-export FOX_DELETE_AROMAFM=1
-export OF_DEFAULT_KEYMASTER_VERSION=4.1
+setup_ADVAN_X1() {
+	local root
+	root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../../.." && pwd) || return 1
 
-# screen settings
-export OF_SCREEN_H=2460
-export OF_STATUS_H=95
-export OF_STATUS_INDENT_LEFT=48
-export OF_STATUS_INDENT_RIGHT=48
-export OF_ALLOW_DISABLE_NAVBAR=0
-export OF_CLOCK_POS=1
+	# Clone to fix build on minimal manifest
+	if [ ! -d "$root/external/gflags" ]; then
+		git clone https://android.googlesource.com/platform/external/gflags/ -b android-12.1.0_r4 "$root/external/gflags" || return 1
+	else
+		echo "Dependency: \"external/gflags\" found ..."
+	fi
 
-# other stuff
-export OF_QUICK_BACKUP_LIST="/boot:/data"
-export OF_ENABLE_LPTOOLS=1
-export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
-export FOX_USE_BASH_SHELL=1
-export FOX_USE_NANO_EDITOR=1
+	# mt6789-common
+	fetch_mt6789_common_repo "$root" || return 1
 
-# number of list options before scrollbar creation
-export OF_OPTIONS_LIST_NUM=9
+	# Patches
+	apply_ADVAN_X1_patch "$root/bootable/recovery" \
+		"$root/device/transsion/mt6789-common/patches/0002-Respect-disabled-repacking.patch" || return 1
+	apply_ADVAN_X1_patch "$root/build/make" \
+		"$root/device/transsion/mt6789-common/patches/0001-Add-zstd-ramdisk-compression.patch" || return 1
+	echo "OK: All patched"
+}
 
-# ----- data format stuff -----
-# ensure that /sdcard is bind-unmounted before f2fs data repair or format
-export OF_UNBIND_SDCARD_F2FS=1
-
-# automatically wipe /metadata after data format
-export OF_WIPE_METADATA_AFTER_DATAFORMAT=1
-
-# avoid MTP issues after data format
-export OF_BIND_MOUNT_SDCARD_ON_FORMAT=1
-
-# don't spam the console with loop errors
-export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
-
-# lz4 compression
-export OF_USE_LZ4_COMPRESSION=1
-
-# build all the partition tools
-export OF_ENABLE_ALL_PARTITION_TOOLS=1
-
-# variant
-export OF_MAINTAINER="Guzram"
-
-# no flashlight
-export OF_FLASHLIGHT_ENABLE=0
-
-	# ccache
-export USE_CCACHE=1
-export CCACHE_EXEC=/usr/bin/ccache
-export CCACHE_MAXSIZE="5G"
-export CCACHE_DIR=".ccache"
-
-if [ ! -d ${CCACHE_DIR} ]; then
-	mkdir $CCACHE_DIR
-fi
+setup_ADVAN_X1
